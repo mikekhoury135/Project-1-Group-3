@@ -19,4 +19,5 @@ fetch("https://yfapi.net/v11/finance/quoteSummary/AAPL?modules=defaultKeyStatist
     return response.json();
 }).then(function(data){
     console.log(data);
-});
+    });
+
