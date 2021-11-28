@@ -84,3 +84,6 @@ var getHistoricalData = function(id, timeString, interval='d1'){
     // Print to console for testing
     console.table(cryptoObjList[id]);
 }
+
+// Testing bitcoin
+getCyprotAssetName("Bitcoin");
