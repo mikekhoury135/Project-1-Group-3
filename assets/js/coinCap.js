@@ -35,8 +35,8 @@ async function getHistoricCrypto(id, startTime, endTime, interval='d1'){
 }
 
 // return true if crypto found else returns false
-async function getCyprotAssetName(name){
-    getAssetName(name).then(data => {
+var getCyprotAssetName = async function(name){
+    return await getAssetName(name).then(data => {
         console.log("Asset Name data return", data);
 
         if(!data.data[0]){
@@ -53,6 +53,7 @@ async function getCyprotAssetName(name){
         if(!cryptoObjList[cryptoID]){
             //Generate new object to store
             cryptoObjList[cryptoID] = {
+                id: cryptoID,
                 symbol: cryptoSymbol,
                 name: cryptoName,
                 rank: cryptoRank,
@@ -63,7 +64,7 @@ async function getCyprotAssetName(name){
                 profit: 0,
             }
         }
-        return cryptoID;
+        return cryptoObjList[cryptoID];
 
     });
 
