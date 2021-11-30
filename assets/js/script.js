@@ -47,11 +47,9 @@ var getUserInputHandler = async function(event){
 
     // Update crypto list with historic prices
     cryptoObjList[cryptoObj.id].prevPrice = historicPriceObj.prevPrice;
-    cryptoObjList[cryptoObj.id].prevDate = historicPriceObj.prevDate
+    cryptoObjList[cryptoObj.id].prevDate = historicPriceObj.prevDate;
 
     console.table(cryptoObjList[cryptoObj.id]);
-    
-
 }
 
 
