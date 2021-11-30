@@ -1,5 +1,4 @@
-var cryptoButtonList = []; // Track button list
-
+const errorTextCSS = "";
 
 // When user clicks submit button
 var getUserInputHandler = async function(event){
@@ -21,31 +20,37 @@ var getUserInputHandler = async function(event){
     
     // Gets the cyrpto asset 
     let cryptoObj = await getCyprotAssetName(cryptoName) 
-    
+
     // Checks if api has crypto 
     if(!cryptoObj){
         $("#stock-input").after($("<span>").text("Stock Not Found").addClass("error-text"));
         return;
     }
 
-    if(cryptoButtonList.indexOf(cryptoObj.id) == -1){ // If it is a new crypto added to list
+    // Append new object if it doesn't exist
+    if(!cryptoObjList[cryptoObj.id]){
+        // Update the Obj List
+        cryptoObjList[cryptoObj.id] = cryptoObj;
 
-        // Create a button if crypto exists
+        // Create a button 
         $(".stock-data").append($("<button>")
             .addClass("stock-btn")
             .text(cryptoObj.name)
             .attr('data-crpto-id', cryptoObj.id));
 
-        // Append to button list to track
-        cryptoButtonList.push(cryptoObj.id);
-        
-    }else{
+    }else{ // The searched stock is already selected
         $("#stock-input").after($("<span>").text("Selected stock already picked").addClass("error-text"));
     }
 
-    await getHistoricalData(cryptoObj.id, cryptoDate );
+  
+    let historicPriceObj = await getHistoricalData(cryptoObj.id, cryptoDate );
 
-    // calculate the profits
+    // Update crypto list with historic prices
+    cryptoObjList[cryptoObj.id].prevPrice = historicPriceObj.prevPrice;
+    cryptoObjList[cryptoObj.id].prevDate = historicPriceObj.prevDate
+
+    console.table(cryptoObjList[cryptoObj.id]);
+    
 
 }
 

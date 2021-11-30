@@ -4,7 +4,9 @@ var cryptoObjList = {}; // global crypto list
 
 // Coin cap
 
-
+var apiHeader = {
+    "Accept-Encoding": gzip
+}
 async function getAssetName(AssetName){
     try{
         // Only 1 result
@@ -55,33 +57,21 @@ var getCyprotAssetName = function(name){
             console.log("No stock found");
             return null;
         }
-        let cryptoSymbol = data.data[0].symbol.trim();
-        let cryptoName = data.data[0].name.trim();
-        let cryptoID = data.data[0].id.trim();
-        let cryptoRank = data.data[0].rank.trim();
-        let cryptoPrice = data.data[0].priceUsd.trim();
-        let previousDate = moment().format("YYYY-MM-DD");
 
-        if(!cryptoObjList[cryptoID]){
-            //Generate new object to store
-            cryptoObjList[cryptoID] = {
-                id: cryptoID,
-                symbol: cryptoSymbol,
-                name: cryptoName,
-                rank: cryptoRank,
-                currentPrice: cryptoPrice,
-                prevDate: previousDate,
-                prevPrice: cryptoPrice,
-                investment: 0,
-                profit: 0,
-            }
+        let cryptoTempObj = {
+            id: data.data[0].id.trim(),
+            symbol: data.data[0].symbol.trim(),
+            name: data.data[0].name.trim(),
+            rank: data.data[0].rank.trim(),
+            currentPrice: data.data[0].priceUsd.trim(),
+            prevDate: moment().format("YYYY-MM-DD"),
+            prevPrice: data.data[0].priceUsd.trim(),
+            investment: 0,
+            profit: 0,
         }
-        return cryptoObjList[cryptoID];
+        return cryptoTempObj;
 
     });
-
-    
-
         // console.log("GETTING HISTORICAL DATA! for",cryptoID);
 
         // // Call to get historic data (just for testing)
@@ -98,11 +88,12 @@ var getHistoricalData = function(id, timeString, interval='d1'){
     // Call the API
     return getHistoricCrypto(id, startTime, endTime, interval).then(data => {
         console.log("historic data return", data);
-
-        cryptoObjList[id].prevPrice = data.data[0].priceUsd;
-        cryptoObjList[id].prevDate = moment(data.data[0].date).add(1,"d").format("YYYY-MM-DD");
+        let historicPrice = {
+            prevPrice: data.data[0].priceUsd ,
+            prevDate: moment(data.data[0].date).add(1,"d").format("YYYY-MM-DD")
+        };
+        return historicPrice;
         // Print to console for testing
-        // console.table(cryptoObjList[id]);
     });
     
 }
