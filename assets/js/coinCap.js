@@ -1,6 +1,6 @@
 // Can be defined somewhere else
-var stockObjList = {};
-var cryptoObjList = {};
+var stockObjList = {}; 
+var cryptoObjList = {}; // global
 
 // Coin cap
 
@@ -34,11 +34,15 @@ async function getHistoricCrypto(id, startTime, endTime, interval='d1'){
     return data
 }
 
-
-var getCyprotAssetName = function(name){
+// return true if crypto found else returns false
+async function getCyprotAssetName(name){
     getAssetName(name).then(data => {
         console.log("Asset Name data return", data);
 
+        if(!data.data[0]){
+            console.log("No stock found");
+            return null;
+        }
         let cryptoSymbol = data.data[0].symbol.trim();
         let cryptoName = data.data[0].name.trim();
         let cryptoID = data.data[0].id.trim();
@@ -57,14 +61,19 @@ var getCyprotAssetName = function(name){
                 prevPrice: cryptoPrice,
                 investment: 0,
                 profit: 0,
-
             }
         }
-        console.log("GETTING HISTORICAL DATA! for",cryptoID);
+        return cryptoID;
 
-        // Call to get historic data (just for testing)
-        getHistoricalData(cryptoID, "2018.11.20", 'd1');
     });
+
+    
+
+        // console.log("GETTING HISTORICAL DATA! for",cryptoID);
+
+        // // Call to get historic data (just for testing)
+        // getHistoricalData(cryptoID, "2018.11.20", 'd1');
+    
 }
 
 var getHistoricalData = function(id, timeString, interval='d1'){
@@ -85,5 +94,7 @@ var getHistoricalData = function(id, timeString, interval='d1'){
     console.table(cryptoObjList[id]);
 }
 
-// Testing bitcoin
-getCyprotAssetName("Bitcoin");
+
+
+
+

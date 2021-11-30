@@ -21,17 +21,16 @@
             </ul>
         </nav>
     </header>
-    <form>
+    <form class="stock-form">
         <label for="user-input">Search for a stock:</label>
-        <input name="user-input" type="text" />
+        <input type="text" id="stock-input" name="stock-input">
         <label for="date">Choose a date</label>
-        <input name="date" type="text" />
-        <button type="submit">Submit</button>
-
+        <input type="text" id="date-input" name="date-input">
+        <input type="submit" value="Submit" id="stock-submit" class="stock-submit"> 
     </form>
-
     <main>
         <h1>Display Stock Data Here</h1>
+        <div class="stock-data"></div>
     </main>
 
     <section id="about">
@@ -53,10 +52,16 @@
         Disclaimer
     </footer>
 
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- jquery UI -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- Moment JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="./assets/js/config.js"></script>
     <script src="./assets/js/coinCap.js"></script>
+    <script src="./assets/js/script.js"></script>
+
 
 
 </body>
