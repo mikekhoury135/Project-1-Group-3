@@ -1,6 +1,6 @@
 // Can be defined somewhere else
 var stockObjList = {}; 
-var cryptoObjList = {}; // global
+var cryptoObjList = {}; // global crypto list
 
 // Coin cap
 
@@ -35,8 +35,8 @@ async function getHistoricCrypto(id, startTime, endTime, interval='d1'){
 }
 
 // return true if crypto found else returns false
-var getCyprotAssetName = async function(name){
-    return await getAssetName(name).then(data => {
+var getCyprotAssetName = function(name){
+    return getAssetName(name).then(data => {
         console.log("Asset Name data return", data);
 
         if(!data.data[0]){
@@ -84,7 +84,7 @@ var getHistoricalData = function(id, timeString, interval='d1'){
     endTime = moment(timeString).format("x");
 
     // Call the API
-    getHistoricCrypto(id, startTime, endTime, interval).then(data => {
+    return getHistoricCrypto(id, startTime, endTime, interval).then(data => {
         console.log("historic data return", data);
 
         cryptoObjList[id].prevPrice = data.data[0].priceUsd;
