@@ -18,31 +18,39 @@ var getUserInputHandler = async function(event){
         $("#datepicker").after($("<span>").text("Date is Empty").addClass("error-text"));
         return;
     }
-
-    let cyrptoObj = await getCyprotAssetName(cryptoName) // getCyprotAssetName returns a promise (requires .then())
+    
+    // Gets the cyrpto asset 
+    let cryptoObj = await getCyprotAssetName(cryptoName) 
     
     // Checks if api has crypto 
-    if(!cyrptoObj){
+    if(!cryptoObj){
         $("#stock-input").after($("<span>").text("Stock Not Found").addClass("error-text"));
         return;
     }
 
-    if(cryptoButtonList.indexOf(cyrptoObj.id) == -1){ // If it is a new crypto added to list
+    if(cryptoButtonList.indexOf(cryptoObj.id) == -1){ // If it is a new crypto added to list
 
         // Create a button if crypto exists
         $(".stock-data").append($("<button>")
             .addClass("stock-btn")
-            .text(cyrptoObj.name)
-            .attr('data-crpto-id', cyrptoObj.id));
+            .text(cryptoObj.name)
+            .attr('data-crpto-id', cryptoObj.id));
 
         // Append to button list to track
-        cryptoButtonList.push(cyrptoObj.id);
+        cryptoButtonList.push(cryptoObj.id);
         
     }else{
         $("#stock-input").after($("<span>").text("Selected stock already picked").addClass("error-text"));
-        }
+    }
 
-    
+    await getHistoricalData(cryptoObj.id, cryptoDate );
+
+    // calculate the profits
+
+}
+
+
+var calculate = function(){
     
 }
 
