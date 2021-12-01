@@ -65,8 +65,8 @@ var getCryptoAsset = function(name){
 var getCryptoHistoricalData = function(id, timeString, interval='d1'){
 
     // Use moment to parse time in unix timestamp
-    startTime = moment(timeString, "YYYY-MM-DD").subtract(1,"d").format("x");
-    endTime = moment(timeString, "YYYY-MM-DD").format("x");
+    startTime = moment(timeString).subtract(1,"d").format("x");
+    endTime = moment(timeString).format("x");
 
     // Call the API
     return getHistoricCryptoApi(id, startTime, endTime, interval).then(data => {
