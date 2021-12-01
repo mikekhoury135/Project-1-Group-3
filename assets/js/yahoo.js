@@ -19,7 +19,8 @@ var getStockNameApi = async function(stockName){
         }
 
         let data = await response.json();
-        return {symbol: data.ResultSet.Result[0].symbol, name:data.ResultSet.Result[0].symbol.name};
+        console.log(data);
+        return {symbol: data.ResultSet.Result[0].symbol, name: data.ResultSet.Result[0].name};
 
     }catch(error){
         console.log(error);
@@ -45,15 +46,20 @@ var getStockPriceApi = async function(symbol){
     }
 }
 
-var getStockName = function(name){
-    getStockNameApi(name).then(stockNameObj =>{
-        console.log(stockNameObj.symbol, stockNameObj.name);
-        getStockPriceApi(stockNameObj.symbol).then(data =>{
+var getStockValue = function(name){
+    return getStockNameApi(name).then(stockNameObj =>{
+        // Stock not found
+        if (!stockNameObj.name || !stockNameObj.symbol){
+            console.log("No Stock found");
+            return null;
+        }
+
+        return getStockPriceApi(stockNameObj.symbol).then(data =>{
             
             let stockTempObj = {
-                id: stockNameObj.name,
+                id: data.longName,
                 symbol: data.symbol,
-                name: data.shortName,
+                name: stockNameObj.name,
                 currentPrice: data.regularMarketPrice,
                 prevDate: moment(data.regularMarketTime,"Xs").format("YYYY-MM-DD"),
                 prevPrice: data.regularMarketPrice,
@@ -64,5 +70,3 @@ var getStockName = function(name){
         });
     });
 }
-
-getStockName("gold");

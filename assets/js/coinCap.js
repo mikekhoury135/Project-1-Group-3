@@ -1,6 +1,4 @@
-// Can be defined somewhere else
-var stockObjList = {}; 
-var cryptoObjList = {}; // global crypto list
+
 
 // Coin cap
 var auth = "Bearer " + config.coinCapApi2;
@@ -17,8 +15,6 @@ async function getAssetName(AssetName){
     try{
         // Only 1 result
         let apiURL = `https://api.coincap.io/v2/assets?limit=1&search=${AssetName}`;
-
-        console.log('Calling this api now:', apiURL);
         let response = await fetch(apiURL);
   
         if(!response.ok){
@@ -37,10 +33,8 @@ async function getAssetName(AssetName){
 async function getHistoricCrypto(id, startTime, endTime, interval='d1'){
     try{
         let apiURL = `https://api.coincap.io/v2/assets/${id}/history?interval=${interval}&start=${startTime}&end=${endTime}`;
-
-        console.log('Calling this api now:', apiURL);
         let response = await fetch(apiURL);
-        console.log(response);
+        
         if(!response.ok){
             let message = `Error with status: ${response.status}`;
             throw new Error(message);
@@ -59,7 +53,7 @@ var getCyprotAssetName = function(name){
         //console.log("Asset Name data return", data);
 
         if(!data.data[0]){
-            console.log("No stock found");
+            console.log("No Crypto found");
             return null;
         }
 

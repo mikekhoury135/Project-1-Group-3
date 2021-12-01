@@ -22,15 +22,21 @@
         </nav>
     </header>
     <form class="stock-form">
-        <label for="user-input">Search for a stock:</label>
-        <input type="text" id="stock-input" name="stock-input">
+        <input class="finance-option" type="radio" id="Stock" name="finance-option" value="Stock" checked>
+        <label for="stock-option-label">Stock</label><br>
+        <input class="finance-option" type="radio" id="Crypto" name="finance-option" value="Crypto">
+        <label for="crypto-option-label">Crypto</label><br>
+        <label class="stock-input-label" for="user-input">Search for Stock:</label>
+        <input type="text" id="stock-input" name="stock-input"><br>
         <label for="date">Choose a date</label>
-        <input type="text" id="datepicker">
+        <input type="text" id="datepicker"><br>
         <input type="submit" value="Submit" id="stock-submit" class="stock-submit"> 
     </form>
     <main>
         <h1>Display Stock Data Here</h1>
         <div class="stock-data"></div>
+
+        <div class="crypto-data"></div>
     </main>
 
     <section id="about">
@@ -58,10 +64,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- Moment JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- Api Key Storage -->
     <script src="./assets/js/config.js"></script>
+    <!-- global Variables -->
+    <script src="./assets/js/global.js"></script>
+    <!-- API JS -->
     <script src="./assets/js/coinCap.js"></script>
     <script src="./assets/js/alpha.js"></script>
     <script src="./assets/js/yahoo.js"></script>
+    <!-- Main script -->
     <script src="./assets/js/script.js"></script>
 
 
