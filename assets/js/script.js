@@ -1,5 +1,17 @@
 const errorTextCSS = "error-text";
 
+// Store functions in object
+const assestFunctions = {
+    crypto: {
+        asset: getCryptoAsset,
+        historicPrice: getCryptoHistoricalData
+    },
+    stock: {
+        asset: getStockAsset,
+        historicPrice: getStockHistoricalData
+    }
+};
+
 // When user clicks submit button
 var getUserInputHandler = async function(event){
     event.preventDefault();
@@ -7,7 +19,7 @@ var getUserInputHandler = async function(event){
 
     let financeOption = $(".finance-option:checked").val().toLowerCase();
     let nameInput = $("#stock-input").val().trim();
-    let dateInput = currentDate = $( "#datepicker" ).datepicker( "getDate" );
+    let dateInput = $( "#datepicker" ).val();
 
     if (!nameInput){
         // add some tailwind css to red text
@@ -19,13 +31,20 @@ var getUserInputHandler = async function(event){
         $("#datepicker").after($("<span>").text("Date is Empty").addClass(errorTextCSS));
         return;
     }
+    console.log(dateInput);
+    if(!moment(dateInput).isValid()){
+        $("#datepicker").after($("<span>").text("Invalid Date").addClass(errorTextCSS));
+        $( "#datepicker" ).val("");
+        return;
+    }else{
+        dateInput = moment(dateInput).format("YYYY-MM-DD");
+    }
 
     let tempObj = {};
+    let historicPriceObj = {};
 
-    if (financeOption == "stock") tempObj = await getStockValue(nameInput);
+    tempObj = await assestFunctions[financeOption].asset(nameInput);
        
-    else if(financeOption == "crypto") tempObj = await getCyprotAssetName(nameInput);
-
     // Checks if api has stock name 
     if(!tempObj){
         $("#stock-input").after($("<span>").text(`${financeOption} Not Found`).addClass(errorTextCSS));
@@ -43,13 +62,13 @@ var getUserInputHandler = async function(event){
         $("#stock-input").after($("<span>").text(`Selected ${financeOption} already picked`).addClass(errorTextCSS));
     }
 
-    if(financeOption == "Crypto"){
+    console.log("getting histoy",tempObj.symbol, dateInput );
+    historicPriceObj = await assestFunctions[financeOption].historicPrice(tempObj.symbol, dateInput );
 
-        let historicPriceObj = await getHistoricalData(tempObj.id, dateInput );
-        // Update crypto list with historic prices
-        stockObjList[tempObj.id].prevPrice = historicPriceObj.prevPrice;
-        stockObjList[tempObj.id].prevDate = historicPriceObj.prevDate;
-    }
+    // Update crypto list with historic prices
+    stockObjList[tempObj.id].prevPrice = historicPriceObj.prevPrice;
+    stockObjList[tempObj.id].prevDate = historicPriceObj.prevDate;
+    
     console.table(stockObjList[tempObj.id]);
 
     // Reset fields
@@ -58,19 +77,41 @@ var getUserInputHandler = async function(event){
 }
 
 
+var displayData = function(id){
+    stockObj = stockObjList[id];
+
+    $(".stock-name").text(stockObj.name);
+    $(".current-price").text(`Current Price: ${stockObj.currPrice}`);
+    $(".current-date").text(`Current Date: ${stockObj.currDate}`);
+    $(".previous-price").text(`Previous Price: ${stockObj.prevPrice}`);
+    $(".previous-date").text(`Previous Date: ${stockObj.prevDate}`);
+
+}
+
 var calculate = function(){
     
 }
 
 // Jquery UI datepicker
-$( "#datepicker" ).datepicker({
-    dateFormat: "yy-mm-d"
+$("#datepicker").datepicker({
+    dateFormat: "yy-mm-d",
+    maxDate: 0
+    
 });
 
 $(".stock-form").on("submit",getUserInputHandler);
 
 $('.finance-option').on("change",function() {
     $(".stock-input-label").text("Search for " + $(this).val() + ":");
+
+    if ($(this).val() == "Stock"){
+        // Weekends are disabled for stocks
+        $("#datepicker").datepicker("option", {beforeShowDay: $.datepicker.noWeekends});
+        console.log($("#datepicker"));
+    }else if($(this).val() == "Crypto"){
+        $("#datepicker").datepicker("option", {beforeShowDay: null});
+    }
+    
 
 });
 

@@ -3,7 +3,7 @@ var yahooOptions = {
    
     params: {modules: 'defaultKeyStatistics,assetProfile'},
     headers: {
-      'x-api-key': 'QneNp0oK9c6Aoa4i6WPzH1Ko1dh403MR2wS6nMtR'
+      'x-api-key': config.yahooAPI,
     }
   };
 
@@ -46,7 +46,31 @@ var getStockPriceApi = async function(symbol){
     }
 }
 
-var getStockValue = function(name){
+var getHistoricalStockApi = async function(id, inputDate, apikey=config.finageAPI){
+    try{
+        if(moment(inputDate,"YYYY-MM-DD").isSameOrAfter(moment())){ // Cant be same as current
+            console.log("can't have a future/same sate")
+            return;
+        }
+
+        let apiURL =`https://api.finage.co.uk/history/stock/open-close?stock=${id}&date=${inputDate}&apikey=${apikey}`;
+
+        let response = await fetch(apiURL)
+        if(!response.ok){
+            let message = `Error with status: ${response.status}`;
+            throw new Error(message);
+        }
+        let data = await response.json();
+        return data
+
+    }catch(error){
+        console.log(error);
+    }
+
+
+}
+
+var getStockAsset = function(name){
     return getStockNameApi(name).then(stockNameObj =>{
         // Stock not found
         if (!stockNameObj.name || !stockNameObj.symbol){
@@ -60,7 +84,9 @@ var getStockValue = function(name){
                 id: data.longName,
                 symbol: data.symbol,
                 name: stockNameObj.name,
-                currentPrice: data.regularMarketPrice,
+                rank: 0,
+                currDate: moment().format("YYYY-MM-DD"),
+                currPrice: data.regularMarketPrice,
                 prevDate: moment(data.regularMarketTime,"Xs").format("YYYY-MM-DD"),
                 prevPrice: data.regularMarketPrice,
                 investment: 0 ,
@@ -68,5 +94,16 @@ var getStockValue = function(name){
             }
             return stockTempObj;
         });
+    });
+}
+
+
+var getStockHistoricalData = function(id, timeString){
+    return getHistoricalStockApi(id,timeString).then(data => {
+        console.log("historic data return",data, data.close, data.from);
+        return {
+            prevPrice: data.close,
+            prevDate: data.from
+        };
     });
 }

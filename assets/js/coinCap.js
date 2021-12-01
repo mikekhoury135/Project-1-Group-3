@@ -1,17 +1,5 @@
 
-
-// Coin cap
-var auth = "Bearer " + config.coinCapApi2;
-var apiHeader = {
-    
-    'method': 'GET',
-    'redirect': 'follow',
-    'headers': new Headers({
-        'Authorization': auth,
-
-    })
-}
-async function getAssetName(AssetName){
+async function getAssetNameApi(AssetName){
     try{
         // Only 1 result
         let apiURL = `https://api.coincap.io/v2/assets?limit=1&search=${AssetName}`;
@@ -30,9 +18,10 @@ async function getAssetName(AssetName){
     }
 }
 
-async function getHistoricCrypto(id, startTime, endTime, interval='d1'){
+async function getHistoricCryptoApi(id, startTime, endTime, interval='d1'){
     try{
         let apiURL = `https://api.coincap.io/v2/assets/${id}/history?interval=${interval}&start=${startTime}&end=${endTime}`;
+        
         let response = await fetch(apiURL);
         
         if(!response.ok){
@@ -47,9 +36,8 @@ async function getHistoricCrypto(id, startTime, endTime, interval='d1'){
     }
 }
 
-// return true if crypto found else returns false
-var getCyprotAssetName = function(name){
-    return getAssetName(name).then(data => {
+var getCryptoAsset = function(name){
+    return getAssetNameApi(name).then(data => {
         //console.log("Asset Name data return", data);
 
         if(!data.data[0]){
@@ -62,7 +50,8 @@ var getCyprotAssetName = function(name){
             symbol: data.data[0].symbol.trim(),
             name: data.data[0].name.trim(),
             rank: data.data[0].rank.trim(),
-            currentPrice: data.data[0].priceUsd.trim(),
+            currDate: moment().format("YYYY-MM-DD"),
+            currPrice: data.data[0].priceUsd.trim(),
             prevDate: moment().format("YYYY-MM-DD"),
             prevPrice: data.data[0].priceUsd.trim(),
             investment: 0,
@@ -73,20 +62,19 @@ var getCyprotAssetName = function(name){
     });
 }
 
-var getHistoricalData = function(id, timeString, interval='d1'){
+var getCryptoHistoricalData = function(id, timeString, interval='d1'){
 
     // Use moment to parse time in unix timestamp
-    startTime = moment(timeString).subtract(1,"d").format("x");
-    endTime = moment(timeString).format("x");
+    startTime = moment(timeString, "YYYY-MM-DD").subtract(1,"d").format("x");
+    endTime = moment(timeString, "YYYY-MM-DD").format("x");
 
     // Call the API
-    return getHistoricCrypto(id, startTime, endTime, interval).then(data => {
+    return getHistoricCryptoApi(id, startTime, endTime, interval).then(data => {
         console.log("historic data return", data);
-        let historicPrice = {
+        return{
             prevPrice: data.data[0].priceUsd ,
             prevDate: moment(data.data[0].date).add(1,"d").format("YYYY-MM-DD")
         };
-        return historicPrice;
     });
     
 }
