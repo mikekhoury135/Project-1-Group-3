@@ -21,8 +21,6 @@ async function getAssetName(AssetName){
         console.log('Calling this api now:', apiURL);
         let response = await fetch(apiURL);
   
-
-
         if(!response.ok){
             let message = `Error with status: ${response.status}`;
             throw new Error(message);
@@ -33,7 +31,6 @@ async function getAssetName(AssetName){
     
     }catch(error){
         console.log('Error: ' + error);
-
     }
 }
 
@@ -80,11 +77,6 @@ var getCyprotAssetName = function(name){
         return cryptoTempObj;
 
     });
-        // console.log("GETTING HISTORICAL DATA! for",cryptoID);
-
-        // // Call to get historic data (just for testing)
-        // getHistoricalData(cryptoID, "2018.11.20", 'd1');
-    
 }
 
 var getHistoricalData = function(id, timeString, interval='d1'){
@@ -101,7 +93,6 @@ var getHistoricalData = function(id, timeString, interval='d1'){
             prevDate: moment(data.data[0].date).add(1,"d").format("YYYY-MM-DD")
         };
         return historicPrice;
-        // Print to console for testing
     });
     
 }
