@@ -1,4 +1,10 @@
 const errorTextCSS = "error-text";
+const stockNameCss = "asset-info-header";
+const currPriceCss = "asset-info";
+const currDateCss = "asset-info";
+const prevPriceCss = "asset-info";
+const prevDateCss = "asset-info";
+const assetButtonCSS = "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-20 rounded focus:outline-none focus:shadow-outline w-full"
 
 // Store functions in object
 const assestFunctions = {
@@ -56,7 +62,7 @@ var getUserInputHandler = async function(event){
         stockObjList[tempObj.id] = tempObj;         // Update the Obj List
 
         // Create a button 
-        $(`.${financeOption}-data`).append($("<button>").addClass("stock-btn").text(tempObj.name).attr('data-crpto-id', tempObj.id));
+        $(`.${financeOption}-data`).append($("<button>").addClass(assetButtonCSS).text(tempObj.name).attr('data-crpto-id', tempObj.id));
 
     }else{ // The searched stock is already selected
         $("#stock-input").after($("<span>").text(`Selected ${financeOption} already picked`).addClass(errorTextCSS));
@@ -71,6 +77,7 @@ var getUserInputHandler = async function(event){
     
     console.table(stockObjList[tempObj.id]);
 
+    displayData(tempObj.id);
     // Reset fields
     $("#stock-input").val("");
     $('#datepicker').datepicker('setDate', null);
@@ -80,11 +87,11 @@ var getUserInputHandler = async function(event){
 var displayData = function(id){
     stockObj = stockObjList[id];
 
-    $(".stock-name").text(stockObj.name);
-    $(".current-price").text(`Current Price: ${stockObj.currPrice}`);
-    $(".current-date").text(`Current Date: ${stockObj.currDate}`);
-    $(".previous-price").text(`Previous Price: ${stockObj.prevPrice}`);
-    $(".previous-date").text(`Previous Date: ${stockObj.prevDate}`);
+    $(".stock-name").text(stockObj.name).addClass(stockNameCss);
+    $(".current-price").text(`Current Price: ${stockObj.currPrice}`).addClass(currPriceCss);
+    $(".current-date").text(`Current Date: ${stockObj.currDate}`).addClass(currDateCss);
+    $(".previous-price").text(`Previous Price: ${stockObj.prevPrice}`).addClass(prevPriceCss);
+    $(".previous-date").text(`Previous Date: ${stockObj.prevDate}`).addClass(prevDateCss);
 
 }
 

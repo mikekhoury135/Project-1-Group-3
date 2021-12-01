@@ -3,7 +3,7 @@ var yahooOptions = {
    
     params: {modules: 'defaultKeyStatistics,assetProfile'},
     headers: {
-      'x-api-key': config.yahooAPI,
+      'x-api-key': config.yahooAPI2,
     }
   };
 

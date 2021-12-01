@@ -10,7 +10,8 @@ var config ={
     finnhubAPI: "c6jshr2ad3ic1ei3qu4g",
     finnhubSandboxAPI: "sandbox_c6jshr2ad3ic1ei3qu50",
     finageAPI: "API_KEY88G4CODKPIZ1ZKLREZ0P3WWDKDPDHY14",
-    yahooAPI: "QneNp0oK9c6Aoa4i6WPzH1Ko1dh403MR2wS6nMtR"
+    yahooAPI: "QneNp0oK9c6Aoa4i6WPzH1Ko1dh403MR2wS6nMtR",
+    yahooAPI2: "h2HA3UsfgV4y0PUHO52oU5n1qpcCXid614bcLuQl"
 
 }
 
