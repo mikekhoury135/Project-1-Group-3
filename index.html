@@ -29,30 +29,26 @@
     </header>
 
     <div class="form w-full max-w-xs mx-auto my-0">
-        <form class="stock-form bg-white shadow-sm border-2 rounded px-8 pt-6 pb-8 mb-4" autocomplete="off">
+        <form class="flex flex-col stock-form bg-white shadow-sm border-2 rounded px-8 pt-6 pb-8 mb-4" autocomplete="off">
             
-            <input class="finance-option" type="radio" id="Stock" name="finance-option" value="Stock" checked>
-            <label for="stock-option-label">Stock</label><br>
-            <input class="finance-option" type="radio" id="Crypto" name="finance-option" value="Crypto">
-            <label for="crypto-option-label">Crypto</label><br>
+            
+            <label for="stock-option-label">Stock
+                <input class="finance-option" type="radio" id="Stock" name="finance-option" value="Stock" checked>
+            </label>
+            
+            <label for="crypto-option-label">Crypto
+                <input class="finance-option" type="radio" id="Crypto" name="finance-option" value="Crypto">
+            </label>
 
             <label class="stock-input-label" for="user-input">Search for a stock:</label>
-            <input class="shadow appearance-none border rounded w-25 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-12" type="text" id="stock-input" name="stock-input">
+            <input class="h-auto shadow appearance-none border rounded w-25 py-1 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-1" type="text" id="stock-input" name="stock-input">
             <label for="date">Choose a date:</label>
-            <input class="shadow appearance-none border rounded w-25 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-12" type="text" id="datepicker">
+            <input class="h-auto shadow appearance-none border rounded w-25 py-1 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-1" type="text" id="datepicker">
             <input class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-20 rounded focus:outline-none focus:shadow-outline" type="submit" value="Submit" id="stock-submit" class="stock-submit">
         </form>
 
     </div>
     <main>
-        <!-- <div>
-            <canvas id="myChart"></canvas>
-        </div> -->
-        
-        <div class="stock-data w-1/2"></div>
-
-        <div class="crypto-data w-1/2"></div>
-
         <div class="display-data">
             <h2 class="asset-info-header stock-name"></h2>
             <span class="asset-info current-price"></span>
@@ -60,6 +56,21 @@
             <span class="asset-info previous-price"></span>
             <span class="asset-info previous-date"></span>
         </div>
+        <!-- <div>
+            <canvas id="myChart"></canvas>
+        </div> -->
+        <div class="data-wrapper">
+            <div class="stock-data w-1/3">
+                <h2 class="data-title" >Stocks:</h2>
+            </div>
+
+            <div class="crypto-data w-1/3">
+                <h2 class="data-title">Crypto:</h2>
+
+            </div>
+     </div>
+
+        
     </main>
 
     <!-- <footer class="justify-around flex-row">

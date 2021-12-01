@@ -1,10 +1,12 @@
-const errorTextCSS = "error-text";
+const errorTextCSS = "error-text text-red-600	";
 const stockNameCss = "asset-info-header";
 const currPriceCss = "asset-info";
 const currDateCss = "asset-info";
 const prevPriceCss = "asset-info";
 const prevDateCss = "asset-info";
-const assetButtonCSS = "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-20 rounded focus:outline-none focus:shadow-outline w-full mb-10"
+
+const assetButtonCSS = "asset-btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-20 rounded focus:outline-none focus:shadow-outline w-full my-1"
+
 
 // Store functions in object
 const assestFunctions = {
@@ -69,7 +71,15 @@ var getUserInputHandler = async function(event){
     }
 
     console.log("getting histoy",tempObj.symbol, dateInput );
-    historicPriceObj = await assestFunctions[financeOption].historicPrice(tempObj.symbol, dateInput );
+    let historicID = "";
+    if (financeOption == 'stock'){
+        historicID = tempObj.symbol;
+    }else{
+        historicID = tempObj.id;
+    }
+    
+
+    historicPriceObj = await assestFunctions[financeOption].historicPrice(historicID, dateInput );
 
     // Update crypto list with historic prices
     stockObjList[tempObj.id].prevPrice = historicPriceObj.prevPrice;
@@ -95,6 +105,12 @@ var displayData = function(id){
 
 }
 
+var displayAssetHandler = function(){
+    let assetID = $(this).attr('data-crpto-id');
+
+    displayData(assetID);
+
+}
 var calculate = function(){
     
 }
@@ -121,4 +137,6 @@ $('.finance-option').on("change",function() {
     
 
 });
+
+$(".data-wrapper").on("click", ".asset-btn", displayAssetHandler);
 
