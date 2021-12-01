@@ -36,17 +36,17 @@ async function getAssetName(AssetName){
 
 async function getHistoricCrypto(id, startTime, endTime, interval='d1'){
     try{
-    let apiURL = `https://api.coincap.io/v2/assets/${id}/history?interval=${interval}&start=${startTime}&end=${endTime}`;
+        let apiURL = `https://api.coincap.io/v2/assets/${id}/history?interval=${interval}&start=${startTime}&end=${endTime}`;
 
-    console.log('Calling this api now:', apiURL);
-    let response = await fetch(apiURL);
-    console.log(response);
-    if(!response.ok){
-        let message = `Error with status: ${response.status}`;
-        throw new Error(message);
-    }
-    let data = await response.json();
-    return data
+        console.log('Calling this api now:', apiURL);
+        let response = await fetch(apiURL);
+        console.log(response);
+        if(!response.ok){
+            let message = `Error with status: ${response.status}`;
+            throw new Error(message);
+        }
+        let data = await response.json();
+        return data
 
     }catch(error){
         console.log('Error: ' + error);
