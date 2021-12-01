@@ -5,52 +5,68 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet"> -->
-    <title>Document</title>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <title>What If Stocks and Crypto</title>
 </head>
 
-<body>
-    <header>
-        <h1>What If Stocks</h1>
-        <nav>
-            <ul>
-                <li><a href="#about">About</a></li>
-                <li><a href="#resources">Resources</a></li>
-                <li><a href="#contributors">Contributors</a></li>
-                <li><a href="#contact-us">Contact Us</a></li>
-            </ul>
-        </nav>
+<body class="">
+    <header class="justify-between flex-row border-b-4 mb-20">
+        <div>
+            <h1 class="logo text-2xl">What If Stocks</h1>
+        </div>
+        <div>
+            <nav class="inline">
+                <ul class="">
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#resources">Resources</a></li>
+                    <li><a href="#contributors">Contributors</a></li>
+                    <li><a href="#contact-us">Contact Us</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
-    <form class="stock-form">
-        <label for="user-input">Search for a stock:</label>
-        <input type="text" id="stock-input" name="stock-input">
-        <label for="date">Choose a date</label>
-        <input type="text" id="datepicker">
-        <input type="submit" value="Submit" id="stock-submit" class="stock-submit"> 
-    </form>
+    <div class="form w-full max-w-xs mx-auto my-0">
+        <form class="stock-form bg-white shadow-sm border-2 rounded px-8 pt-6 pb-8 mb-4" autocomplete="off">
+            <label for="user-input">Search for a stock:</label>
+            <input class="shadow appearance-none border rounded w-25 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-12" type="text" id="stock-input" name="stock-input">
+            <label for="date">Choose a date:</label>
+            <input class="shadow appearance-none border rounded w-25 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-12" type="text" id="datepicker">
+            <input class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-20 rounded focus:outline-none focus:shadow-outline" type="submit" value="Submit" id="stock-submit" class="stock-submit">
+        </form>
+    </div>
     <main>
-        <h1>Display Stock Data Here</h1>
-        <div class="stock-data"></div>
+        <div>
+            <canvas id="myChart"></canvas>
+        </div>
+        <div class="stock-data">
+
+        </div>
     </main>
 
-    <section id="about">
-        <h1>About</h1>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure, nisi sequi. Deleniti possimus voluptatum id veritatis illum ab quam vitae expedita blanditiis! Possimus, adipisci quasi qui optio fugit ipsa debitis?</p>
-    </section>
-    <section id="resources">
-        <h1>Resources</h1>
-    </section>
-    <section id="contributors">
-        <h1>Contributors</h1>
-    </section>
-    <section id="contact-us">
-        <h1>Contact Us</h1>
-    </section>
+    <!-- <footer class="justify-around flex-row">
+        <section id="about">
+            <h1>About</h1>
+        </section>
+        <section id="resources">
+            <h1>Resources</h1>
+        </section>
+        <section id="contributors">
+            <h1>Contributors</h1>
+        </section>
+        <section id="contact-us">
+            <h1>Contact Us</h1>
+        </section>
+    </footer> -->
 
-
-    <footer>
-        Disclaimer
-    </footer>
+    <script>
+        // === include 'setup' then 'config' above ===
+      
+        const myChart = new Chart(
+          document.getElementById('myChart'),
+          config
+        );
+    </script>
 
     <!-- jQuery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -58,6 +74,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- Moment JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- Chart.JS -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="./assets/js/config.js"></script>
     <script src="./assets/js/coinCap.js"></script>
     <script src="./assets/js/script.js"></script>
