@@ -136,7 +136,7 @@ footer {
     text-align: center;
 }
 
-.asset-info-header{
+.asset-info-header {
     font-size: 36px;
     font-weight: 900;
 }
@@ -146,8 +146,19 @@ footer {
 
 }
 
-.stock-data{
+.stock-data, .crypto-data{
     display: flex;
     flex-direction: column;
-    margin: 0 auto;
+}
+
+.data-wrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.data-title{
+    font-size: 36px;
+    font-weight: 900;
+    text-align: center;
 }
