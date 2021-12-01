@@ -4,7 +4,7 @@ const currPriceCss = "asset-info";
 const currDateCss = "asset-info";
 const prevPriceCss = "asset-info";
 const prevDateCss = "asset-info";
-const assetButtonCSS = "asset-btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-20 rounded focus:outline-none focus:shadow-outline w-full"
+const assetButtonCSS = "asset-btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-20 rounded focus:outline-none focus:shadow-outline w-full my-1"
 
 // Store functions in object
 const assestFunctions = {
