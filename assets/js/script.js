@@ -105,10 +105,19 @@ var displayData = function(id){
 
 var displayAssetHandler = function(){
     let assetID = $(this).attr('data-crpto-id');
-
     displayData(assetID);
-
 }
+
+var saveAsset = function(){
+    localStorage.setItem('assetList', JSON.stringify(stockObjList));
+}
+
+var loadAsset = function(){
+    stockObjList = JSON.parse(localStorage.getItem('assetList'));
+    
+}
+
+
 var calculate = function(){
     
 }
