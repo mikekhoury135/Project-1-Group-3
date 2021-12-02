@@ -54,6 +54,7 @@ var getCryptoAsset = function(name){
             currPrice: data.data[0].priceUsd.trim(),
             prevDate: moment().format("YYYY-MM-DD"),
             prevPrice: data.data[0].priceUsd.trim(),
+            type: "crypto",
             investment: 0,
             profit: 0,
         }

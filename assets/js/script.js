@@ -12,6 +12,8 @@ const assetButtonCSS = "asset-btn bg-blue-500 hover:bg-blue-700 text-white font-
 
 const loadEl = $("<div>").addClass(loadContainerCSS).append($("<div>").addClass(loadCSS));
 
+
+
 // Store functions in object
 const assestFunctions = {
     crypto: {
@@ -73,7 +75,7 @@ var getUserInputHandler = async function(event){
         stockObjList[tempObj.id] = tempObj;         // Update the Obj List
 
         // Create a button 
-        $(`.${financeOption}-data`).append($("<button>").addClass(assetButtonCSS).text(tempObj.name).attr('data-crpto-id', tempObj.id));
+        $(`.${financeOption}-data`).append($("<button>").addClass(assetButtonCSS).text(tempObj.name).attr({'data-crpto-id': tempObj.id, 'data-type': financeOption }));
 
     }
     
@@ -127,7 +129,17 @@ var saveAsset = function(){
 }
 
 var loadAsset = function(){
-    stockObjList = JSON.parse(localStorage.getItem('assetList'));
+    stockObjTempList = JSON.parse(localStorage.getItem('assetList'));
+
+    if(!stockObjTempList){
+        stockObjList = {};
+        return
+    }
+    stockObjList = stockObjTempList;
+    for(asset in stockObjList){
+        $(`.${stockObjList[asset].type}-data`).append($("<button>").addClass(assetButtonCSS).text(stockObjList[asset].name).attr({'data-crpto-id': stockObjList[asset].id, 'data-type': stockObjList[asset].type }));
+
+    }
 }
 
 var toggleModal = function(){
@@ -137,6 +149,11 @@ var toggleModal = function(){
 var calculate = function(){
     
 }
+
+
+// load from local storage
+loadAsset();
+
 
 // Jquery UI datepicker
 $("#datepicker").datepicker({
