@@ -4,9 +4,13 @@ const currPriceCss = "asset-info";
 const currDateCss = "asset-info";
 const prevPriceCss = "asset-info";
 const prevDateCss = "asset-info";
+const loadContainerCSS = "stock-loading flex justify-center items-center my-1";
+const loadCSS = "stock-loading animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900";
 
 const assetButtonCSS = "asset-btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-20 rounded focus:outline-none focus:shadow-outline w-full my-1"
 
+
+const loadEl = $("<div>").addClass(loadContainerCSS).append($("<div>").addClass(loadCSS));
 
 // Store functions in object
 const assestFunctions = {
@@ -23,7 +27,12 @@ const assestFunctions = {
 // When user clicks submit button
 var getUserInputHandler = async function(event){
     event.preventDefault();
+    $('.animate-spin').css("display", "block")
     $(".error-text").remove();
+
+    // show loading
+    $(".submit-btn").after(loadEl);
+
 
     let financeOption = $(".finance-option:checked").val().toLowerCase();
     let nameInput = $("#stock-input").val().trim();
@@ -39,7 +48,6 @@ var getUserInputHandler = async function(event){
         $("#datepicker").after($("<span>").text("Date is Empty").addClass(errorTextCSS));
         return;
     }
-    console.log(dateInput);
     if(!moment(dateInput).isValid()){
         $("#datepicker").after($("<span>").text("Invalid Date").addClass(errorTextCSS));
         $( "#datepicker" ).val("");
@@ -51,6 +59,7 @@ var getUserInputHandler = async function(event){
     let tempObj = {};
     let historicPriceObj = {};
 
+    
     tempObj = await assestFunctions[financeOption].asset(nameInput);
        
     // Checks if api has stock name 
@@ -68,9 +77,7 @@ var getUserInputHandler = async function(event){
 
     }
     
-  
-
-    console.log("getting histoy",tempObj.symbol, dateInput );
+      console.log("getting histoy",tempObj.symbol, dateInput );
     let historicID = "";
     if (financeOption == 'stock'){
         historicID = tempObj.symbol;
@@ -79,22 +86,25 @@ var getUserInputHandler = async function(event){
     }
     
     historicPriceObj = await assestFunctions[financeOption].historicPrice(historicID, dateInput );
-
-    // Update crypto list with historic prices
-    stockObjList[tempObj.id].prevPrice = historicPriceObj.prevPrice;
-    stockObjList[tempObj.id].prevDate = historicPriceObj.prevDate;
+    console.log(historicPriceObj);
+    if(historicPriceObj){
+        // Update crypto list with historic prices
+        stockObjList[tempObj.id].prevPrice = historicPriceObj.prevPrice;
+        stockObjList[tempObj.id].prevDate = historicPriceObj.prevDate;
+    }
     
     console.table(stockObjList[tempObj.id]);
     saveAsset();
 
     displayData(tempObj.id);
 
+    loadEl.remove();
+    toggleModal();
 
-    // Reset fields
+    // Reset fields and hide modal
     $("#stock-input").val("");
     $('#datepicker').datepicker('setDate', null);
 }
-
 
 var displayData = function(id){
     stockObj = stockObjList[id];
@@ -120,7 +130,10 @@ var loadAsset = function(){
     stockObjList = JSON.parse(localStorage.getItem('assetList'));
 }
 
-
+var toggleModal = function(){
+    $(".stock-modal").toggleClass("opacity-0 pointer-events-none");
+    $("body").toggleClass("modal-active");
+}
 var calculate = function(){
     
 }
@@ -149,4 +162,10 @@ $('.finance-option').on("change",function() {
 });
 
 $(".data-wrapper").on("click", ".asset-btn", displayAssetHandler);
+
+$(".start-btn").on("click", function(){
+    toggleModal();
+})
+
+$(".modal-close").on("click",() => toggleModal());
 

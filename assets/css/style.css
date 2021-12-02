@@ -162,3 +162,7 @@ footer {
     font-weight: 900;
     text-align: center;
 }
+
+.start-btn-wrapper{
+    margin: 0 auto;
+}
