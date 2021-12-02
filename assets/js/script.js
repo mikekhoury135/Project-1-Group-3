@@ -64,9 +64,9 @@ var getUserInputHandler = async function(event){
         // Create a button 
         $(`.${financeOption}-data`).append($("<button>").addClass(assetButtonCSS).text(tempObj.name).attr('data-crpto-id', tempObj.id));
 
-    }else{ // The searched stock is already selected
-        $("#stock-input").after($("<span>").text(`Selected ${financeOption} already picked`).addClass(errorTextCSS));
     }
+    
+  
 
     console.log("getting histoy",tempObj.symbol, dateInput );
     let historicID = "";
@@ -76,7 +76,6 @@ var getUserInputHandler = async function(event){
         historicID = tempObj.id;
     }
     
-
     historicPriceObj = await assestFunctions[financeOption].historicPrice(historicID, dateInput );
 
     // Update crypto list with historic prices
@@ -84,8 +83,11 @@ var getUserInputHandler = async function(event){
     stockObjList[tempObj.id].prevDate = historicPriceObj.prevDate;
     
     console.table(stockObjList[tempObj.id]);
+    saveAsset();
 
     displayData(tempObj.id);
+
+
     // Reset fields
     $("#stock-input").val("");
     $('#datepicker').datepicker('setDate', null);
@@ -114,7 +116,6 @@ var saveAsset = function(){
 
 var loadAsset = function(){
     stockObjList = JSON.parse(localStorage.getItem('assetList'));
-    
 }
 
 
