@@ -54,6 +54,7 @@ var getCryptoAsset = function(name){
             currPrice: data.data[0].priceUsd.trim(),
             prevDate: moment().format("YYYY-MM-DD"),
             prevPrice: data.data[0].priceUsd.trim(),
+            type: "crypto",
             investment: 0,
             profit: 0,
         }
@@ -71,10 +72,16 @@ var getCryptoHistoricalData = function(id, timeString, interval='d1'){
     // Call the API
     return getHistoricCryptoApi(id, startTime, endTime, interval).then(data => {
         console.log("historic data return", data);
-        return{
-            prevPrice: data.data[0].priceUsd ,
-            prevDate: moment(data.data[0].date).add(1,"d").format("YYYY-MM-DD")
-        };
+
+        if(data){
+            return{
+                prevPrice: data.data[0].priceUsd ,
+                prevDate: moment(data.data[0].date).add(1,"d").format("YYYY-MM-DD")
+            };
+        }else{
+            return null;
+        }
+        
     });
     
 }

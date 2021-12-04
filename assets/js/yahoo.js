@@ -89,6 +89,7 @@ var getStockAsset = function(name){
                 currPrice: data.regularMarketPrice,
                 prevDate: moment(data.regularMarketTime,"Xs").format("YYYY-MM-DD"),
                 prevPrice: data.regularMarketPrice,
+                type: "stock",
                 investment: 0 ,
                 profit: 0
             }
